@@ -56,6 +56,6 @@ Vagrant.configure(2) do |config|
      touch FIRST_INSTALL
      chown -R vagrant:vagrant /var/www
      chmod -R a+rw /var/www
-     echo 'http://localhost:8080/typo'
+     echo 'http://localhost:8080/index.php'
   SHELL
 end
