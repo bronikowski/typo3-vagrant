@@ -16,11 +16,26 @@ Vagrant.configure(2) do |config|
   #   vb.memory = "1024"
   # end
   config.vm.provision "shell", inline: <<-SHELL
+     echo 'Installing Apache2, MySQL (password: none)'
      export DEBIAN_FRONTEND=noninteractive
      debconf-set-selections <<< 'mysql-server mysql-server/root_password password none'
      debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password none'
      sudo apt-get update
      sudo apt-get dist-upgrade
-     sudo apt-get install -q -y apache2 php5-ldap libapache2-mod-php5 tmux vim git shelldap slapd mysql-server
+     sudo apt-get install -q -y apache2 php5-ldap libapache2-mod-php5 tmux vim git shelldap mysql-server mc htop php5-json
+     sudo echo 'deb http://typo3.sunsite.dk/software/debian/ ./' > /etc/apt/sources.list
+
+     # typo3
+
+     cd /tmp
+     echo 'Downloading typo'
+     wget -c "http://downloads.sourceforge.net/project/typo3/TYPO3%20Source%20and%20Dummy/TYPO3%207.4.0/typo3_src-7.4.0.tar.gz?r=http%3A%2F%2Ftypo3.org%2Fdownload%2F&ts=1442816204&use_mirror=netix" -O typo.tar.gz -q
+     echo 'Installing typo3'
+     cd /var/www
+     tar xf /tmp/typo.tar.gz
+     ln -s typo3_src-7.4.0 typo3_src
+     ln -s typo3_src/index.php index.php
+     ln -s typo3_src/typo3 typo3
+     cp typo3_src/_.htaccess .htaccess
   SHELL
 end
