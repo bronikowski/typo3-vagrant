@@ -23,8 +23,6 @@ Vagrant.configure(2) do |config|
      sudo apt-get update
      sudo apt-get dist-upgrade
      sudo apt-get install -q -y apache2 php5-ldap libapache2-mod-php5 tmux vim git shelldap mysql-server mc htop php5-json
-     sudo echo 'deb http://typo3.sunsite.dk/software/debian/ ./' > /etc/apt/sources.list
-
      # typo3
 
      cd /tmp
