@@ -31,11 +31,13 @@ Vagrant.configure(2) do |config|
      echo 'Downloading typo'
      wget -c "http://downloads.sourceforge.net/project/typo3/TYPO3%20Source%20and%20Dummy/TYPO3%207.4.0/typo3_src-7.4.0.tar.gz?r=http%3A%2F%2Ftypo3.org%2Fdownload%2F&ts=1442816204&use_mirror=netix" -O typo.tar.gz -q
      echo 'Installing typo3'
-     cd /var/www
+     cd /var/www/html
      tar xf /tmp/typo.tar.gz
      ln -s typo3_src-7.4.0 typo3_src
      ln -s typo3_src/index.php index.php
      ln -s typo3_src/typo3 typo3
      cp typo3_src/_.htaccess .htaccess
+     chown -R vagrant:vagrant /var/www
+     chmod -R a+rw /var/www
   SHELL
 end
