@@ -22,15 +22,14 @@ Vagrant.configure(2) do |config|
      debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password none'
      sudo apt-get update
      sudo apt-get dist-upgrade
-     sudo apt-get install -q -y apache2 php5-ldap libapache2-mod-php5 tmux vim git shelldap mysql-server mc htop php5-json php-gd php5-mcrypt php5-xdebug php5-mysql
+     sudo apt-get install -q -y apache2 php5-ldap libapache2-mod-php5 tmux vim git shelldap mysql-server mc htop php5-json php5-gd php5-mcrypt php5-xdebug php5-mysql
 
      # xdebug
 
-     cat << EOF | sudo tee -a /etc/php5/mods-available/xdebug.ini
-     xdebug.scream=1
-     xdebug.cli_color=1
-     xdebug.show_local_vars=1
-     EOF
+     echo xdebug.scream=1 >> /etc/php5/mods-available/xdebug.ini
+     echo xdebug.cli_color=1 >> /etc/php5/mods-available/xdebug.ini
+     echo xdebug.show_local_vars=1 >> /etc/php5/mods-available/xdebug.ini
+     echo xdebug.max_nesting_level=400 >> /etc/php5/mods-available/xdebug.ini
 
      # apache
 
@@ -57,5 +56,7 @@ Vagrant.configure(2) do |config|
      chown -R vagrant:vagrant /var/www
      chmod -R a+rw /var/www
      echo 'http://localhost:8080/index.php'
+     echo 'Rebooting'
+     reboot
   SHELL
 end
