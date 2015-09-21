@@ -16,8 +16,11 @@ Vagrant.configure(2) do |config|
   #   vb.memory = "1024"
   # end
   config.vm.provision "shell", inline: <<-SHELL
+     export DEBIAN_FRONTEND=noninteractive
+     debconf-set-selections <<< 'mysql-server mysql-server/root_password password none'
+     debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password none'
      sudo apt-get update
      sudo apt-get dist-upgrade
-     sudo apt-get install -y apache2 php5-ldap libapache2-mod-php5 tmux vim git shelldap slapd
+     sudo apt-get install -q -y apache2 php5-ldap libapache2-mod-php5 tmux vim git shelldap slapd mysql-server
   SHELL
 end
