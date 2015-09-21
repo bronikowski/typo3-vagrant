@@ -37,7 +37,9 @@ Vagrant.configure(2) do |config|
      ln -s typo3_src/index.php index.php
      ln -s typo3_src/typo3 typo3
      cp typo3_src/_.htaccess .htaccess
+     touch FIRST_INSTALL
      chown -R vagrant:vagrant /var/www
      chmod -R a+rw /var/www
+     echo 'http://localhost:8080/typo'
   SHELL
 end
