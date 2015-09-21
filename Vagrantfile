@@ -22,7 +22,25 @@ Vagrant.configure(2) do |config|
      debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password none'
      sudo apt-get update
      sudo apt-get dist-upgrade
-     sudo apt-get install -q -y apache2 php5-ldap libapache2-mod-php5 tmux vim git shelldap mysql-server mc htop php5-json
+     sudo apt-get install -q -y apache2 php5-ldap libapache2-mod-php5 tmux vim git shelldap mysql-server mc htop php5-json php-gd php5-mcrypt php5-xdebug php5-mysql
+
+     # xdebug
+
+     cat << EOF | sudo tee -a /etc/php5/mods-available/xdebug.ini
+     xdebug.scream=1
+     xdebug.cli_color=1
+     xdebug.show_local_vars=1
+     EOF
+
+     # apache
+
+     sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php5/apache2/php.ini
+     sed -i "s/display_errors = .*/display_errors = On/" /etc/php5/apache2/php.ini
+     sed -i "s/upload_max_filesize = .*/upload_max_filesize = 20M/" /etc/php5/apache2/php.ini
+     sed -i "s/max_execution_time = .*/max_execution_time = 300/" /etc/php5/apache2/php.ini
+     echo max_input_vars = 3000 >> /etc/php5/apache2/php.ini
+     sed -i "s/post_max_size = .*/post_max_size = 20M/" /etc/php5/apache2/php.ini
+
      # typo3
 
      cd /tmp
